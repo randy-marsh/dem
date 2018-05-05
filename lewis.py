@@ -80,7 +80,6 @@ def module(P, n, z, st, coef):
     F = selectF(m)
     wt = selectwt(P, n, m, z)
     sigma = kv*wt/(F*m*Y)
-    print sigma
     sol = sp.solve(sigma - st/coef, m)
     return sol[0]
 

@@ -201,7 +201,7 @@ class agma:
     def __init__(self, power, rpm, z, m, mg, yj, phi=20, ko=1.0, kb=1.0, Qv=6,
                  el=50e+3, yo=1.0, yz=1.0, zr=1.0, zw=1.0, Fwidth=5):
         self.power = power
-        self.rpm = n
+        self.rpm = rpm
         self.z = z
         self.m = m
         self.dp = self.m*self.z
@@ -276,7 +276,7 @@ if __name__ == '__main__':
     sigmabs = zg1.sigmab()
     zg1.sigmabsf(st=274.69e+6, sigmabs=sigmabs)
     acs = zg1.sigmac()
-    zg1.sigmacsf(sc=742.3e+6, acs=acs)
+    zg1.sigmacsf(sc=791.3e+6, acs=acs)
     ###########################################################################
     #ZP1
     zp1 =agma(power=3728.5, rpm=700, z=16.0, m=0.004, mg=3.5, yj=0.27)
@@ -284,7 +284,7 @@ if __name__ == '__main__':
     sigmabs = zp1.sigmab()
     zp1.sigmabsf(st=274.69e+6, sigmabs=sigmabs)
     acs = zp1.sigmac()
-    zp1.sigmacsf(sc=742.3e+6, acs=acs)
+    zp1.sigmacsf(sc=791.3e+6, acs=acs)
     ###########################################################################
 #    ZG2
     zg2 =agma(power=3728.5, rpm=1400, z=32.0, m=0.006, mg=2.0, yj=0.36, Fwidth=3)
@@ -292,7 +292,7 @@ if __name__ == '__main__':
     sigmabs= zg2.sigmab()
     zg2.sigmabsf(st=274.69e+6, sigmabs=sigmabs)
     acs = zg2.sigmac()
-    zg2.sigmacsf(sc=742.3e+6, acs=acs)
+    zg2.sigmacsf(sc=791.3e+6, acs=acs)
     ###########################################################################
     #ZP2
     zp2 =agma(power=3728.5, rpm=700, z=16.0, m=0.006, mg=2.0, yj=0.27, Fwidth=3)
@@ -300,4 +300,4 @@ if __name__ == '__main__':
     sigmabs= zp2.sigmab()
     zp2.sigmabsf(st=274.69e+6, sigmabs=sigmabs)
     acs = zp2.sigmac()
-    zp2.sigmacsf(sc=742.3e+6, acs=acs)
+    zp2.sigmacsf(sc=791.3e+6, acs=acs)
