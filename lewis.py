@@ -6,7 +6,6 @@ Ecuacion de Lewis para el calculo del modulo
 """
 import sympy as sp
 import numpy as np
-import pickle
 from sklearn.linear_model import Ridge
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
@@ -19,7 +18,7 @@ def selectkv(n, m, z):
     :param n: revolutions per minute [rpm]
     :param m: module [m]
     :param z: theeth
-    :return kv: kv facor
+    :return kv: kv factor
     """
     v = n*(2*np.pi/60)*(z*m)/2
     # hierro fundido, perfil moldeado
@@ -54,6 +53,7 @@ def selectwt(P, n, m, z):
     :param n: revolutions per minute [rpm]
     :param m: module [m]
     :param z: teeth  number
+    :param wt: gear tangential force [N]
     """
     wt = (P/((2*np.pi*n)/60))/(z*m/2)
     return wt
@@ -70,11 +70,7 @@ def module(P, n, z, st, coef):
     :param coef: safety factor
     :return sol: module [m]
     """
-    Z = pickle.load(open('Z', 'rb'))
-    y = pickle.load(open('y', 'rb'))
-    model = make_pipeline(PolynomialFeatures(7), Ridge())
-    model.fit(Z, y)
-    Y = model.predict(z)
+    Y = selectY(z)
     m = sp.Symbol('m')
     kv = selectkv(n, m, z)
     F = selectF(m)
@@ -104,12 +100,25 @@ def selectY(z):
         model.fit(Z, y)
         return model.predict(z)
 
-    Z = pickle.load(open('Z', 'rb'))
-    y = pickle.load(open('y', 'rb'))
-    if not y[np.where(Z == z)[0]].any():
+    Z = np.array([12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 26, 28, 30,
+                  34, 38, 43, 50, 60, 75, 100, 150, 300, 400])
+    y = np.array([2.449999999999999956e-01, 2.610000000000000098e-01,
+                  2.770000000000000240e-01, 2.899999999999999800e-01,
+                  2.959999999999999853e-01, 3.029999999999999916e-01,
+                  3.089999999999999969e-01, 3.140000000000000013e-01,
+                  3.220000000000000084e-01, 3.280000000000000138e-01,
+                  3.310000000000000164e-01, 3.370000000000000218e-01,
+                  3.459999999999999742e-01, 3.529999999999999805e-01,
+                  3.589999999999999858e-01, 3.709999999999999964e-01,
+                  3.840000000000000080e-01, 3.970000000000000195e-01,
+                  4.089999999999999747e-01, 4.219999999999999862e-01,
+                  4.349999999999999978e-01, 4.470000000000000084e-01,
+                  4.600000000000000200e-01, 4.719999999999999751e-01,
+                  4.799999999999999822e-01])
+    if not y[np.where(Z == z)].any():
         return aproxY(z)
     else:
-        return y[np.where(Z == z)[0]]
+        return y[np.where(Z == z)]
 
 
 def lewis(P, n, m, z, sigma, coef):
