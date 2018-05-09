@@ -97,7 +97,7 @@ def selectY(z):
         :returns Y: Lewis shape factor polynomial aproximation
         """
         model = make_pipeline(PolynomialFeatures(7), Ridge())
-        model.fit(Z, y)
+        model.fit(Z.reshape(-1,1), y)
         return model.predict(z)
 
     Z = np.array([12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 26, 28, 30,
@@ -115,6 +115,7 @@ def selectY(z):
                   4.349999999999999978e-01, 4.470000000000000084e-01,
                   4.600000000000000200e-01, 4.719999999999999751e-01,
                   4.799999999999999822e-01])
+    # if z is in the list return the vale else launch the aproximation
     if not y[np.where(Z == z)].any():
         return aproxY(z)
     else:
